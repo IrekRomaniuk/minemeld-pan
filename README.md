@@ -1,6 +1,6 @@
 [Running MineMeld Using Docker](https://live.paloaltonetworks.com/t5/MineMeld-Articles/Running-MineMeld-using-Docker/ta-p/289062)
 
-![Minemeld](https://raw.githubusercontent.com/irekromaniuk/minemeld-pan/master/Minemeld.jpg)
+![Minemeld](https://raw.githubusercontent.com/IrekRomaniuk/minemeld-pan/master/Minemeld.jpg)
 
 ### Install & Run MineMeld
 ##### Pull the latest official image
