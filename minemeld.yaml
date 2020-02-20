@@ -1,0 +1,53 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mm-pa
+  labels:
+        app: mm-pa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mm-pa
+  template:
+    metadata:
+      name: mm-pa
+      labels:
+        app: mm-pa     
+    spec:
+      containers:
+      - name: mm-pa
+        image: paloaltonetworks/minemeld
+        ports:
+        - containerPort: 443
+        volumeMounts:
+        - name: minemeld-local
+          mountPath: /opt/minemeld/local 
+        - name: minemeld-logs
+          mountPath: /opt/minemeld/log 
+      volumes:
+      - name: minemeld-local
+        azureFile:
+          secretName: azure-secret
+          shareName: minemeld-local
+          readOnly: false  
+      - name: minemeld-logs
+        azureFile:
+          secretName: azure-secret
+          shareName: minemeld-logs
+          readOnly: false     
+---    
+apiVersion: v1
+kind: Service
+metadata:
+  name: mm-pa
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+  labels:
+    app: mm-pa
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 443
+  selector:
+    app: mm-pa
